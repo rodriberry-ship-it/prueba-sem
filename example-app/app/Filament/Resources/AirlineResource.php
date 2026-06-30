@@ -55,6 +55,16 @@ class AirlineResource extends Resource
             'AU' => 'Australia',
         ];
     }
+/*
+    public static function canViewAny(): bool
+    {
+        return auth()->user()?->canAccessFilamentResource(self::class);
+    }
+
+    public static function canCreate(): bool
+    {
+        return auth()->user()?->canAccessFilamentResource(self::class);
+    }*/
 
     public static function form(Form $form): Form
     {

@@ -12,6 +12,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Spatie\Permission\Models\Role;
 
 class UserResource extends Resource
 {
@@ -24,12 +25,12 @@ class UserResource extends Resource
 
     public static function canViewAny(): bool
     {
-        return true;
+        return auth()->user()?->hasRole('Desarrollador Web') || auth()->user()?->hasRole('Jefatura');
     }
 
     public static function canCreate(): bool
     {
-        return true;
+        return auth()->user()?->hasRole('Desarrollador Web') || auth()->user()?->hasRole('Jefatura');
     }
 
     public static function form(Form $form): Form
@@ -40,8 +41,6 @@ class UserResource extends Resource
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('email')
-                    ->email()
-                    ->required()
                     ->maxLength(255),
                 Forms\Components\DateTimePicker::make('email_verified_at'),
                 Forms\Components\TextInput::make('password')
@@ -50,6 +49,11 @@ class UserResource extends Resource
                     ->maxLength(255)
                     ->dehydrateStateUsing(fn ($state) => filled($state) ? bcrypt($state) : null)
                     ->dehydrated(fn ($state) => filled($state)),
+                Forms\Components\Select::make('roles')
+                    ->multiple()
+                    ->relationship('roles', 'name')
+                    ->label('Roles')
+                    ->preload(),
             ]);
     }
 

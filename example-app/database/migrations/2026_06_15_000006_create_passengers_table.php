@@ -11,12 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
+        if (! Schema::hasTable('flights')) {
+            return;
+        }
+
         Schema::create('passengers', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('passport')->unique();
             $table->string('nationality');
-            $table->foreignId('flight_id')->constrained('flights')->cascadeOnDelete();
+            $table->foreignId('flight_id')->nullable()->constrained('flights')->nullOnDelete();
             $table->timestamps();
         });
     }

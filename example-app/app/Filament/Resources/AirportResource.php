@@ -24,12 +24,28 @@ class AirportResource extends Resource
 
     public static function canViewAny(): bool
     {
-        return true;
+        $user = auth()->user();
+
+        if (! $user) {
+            return false;
+        }
+
+        return method_exists($user, 'canAccessFilamentResource')
+            ? $user->canAccessFilamentResource(self::class)
+            : true;
     }
 
     public static function canCreate(): bool
     {
-        return true;
+        $user = auth()->user();
+
+        if (! $user) {
+            return false;
+        }
+
+        return method_exists($user, 'canAccessFilamentResource')
+            ? $user->canAccessFilamentResource(self::class)
+            : true;
     }
 
     public static function form(Form $form): Form

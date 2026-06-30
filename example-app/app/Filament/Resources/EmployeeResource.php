@@ -22,6 +22,16 @@ class EmployeeResource extends Resource
     protected static ?string $navigationGroup = 'Recursos';
     protected static ?int $navigationSort = 4;
 
+   /* public static function canViewAny(): bool
+    {
+        return auth()->user()?->canAccessFilamentResource(self::class);
+    }
+
+    public static function canCreate(): bool
+    {
+        return auth()->user()?->canAccessFilamentResource(self::class);
+    }*/
+
     public static function form(Form $form): Form
     {
         return $form

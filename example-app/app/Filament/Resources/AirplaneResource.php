@@ -19,6 +19,16 @@ class AirplaneResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+   /*ublic static function canViewAny(): bool
+    {
+        return auth()->user()?->canAccessFilamentResource(self::class);
+    }
+
+    public static function canCreate(): bool
+    {
+        return auth()->user()?->canAccessFilamentResource(self::class);
+    }*/
+
     public static function form(Form $form): Form
     {
         return $form
